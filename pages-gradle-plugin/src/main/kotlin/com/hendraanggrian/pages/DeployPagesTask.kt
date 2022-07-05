@@ -34,7 +34,12 @@ open class DeployPagesTask : DefaultTask(), DeployPagesSpec {
             logger.info("  $filename")
             val file = outputDir.resolve(filename)
             transformer.transform(DOMSource(document), StreamResult(FileWriter(file)))
-            file.writeText(file.readText().fixFencedCodeBlock())
+            file.writeText(
+                buildString {
+                    append("<!doctype html>")
+                    append(file.readText().fixFencedCodeBlock())
+                }
+            )
         }
     }
 

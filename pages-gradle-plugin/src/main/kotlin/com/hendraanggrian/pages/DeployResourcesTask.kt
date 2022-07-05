@@ -56,6 +56,6 @@ open class DeployResourcesTask : DefaultTask(), DeployResourcesSpec {
     }
 
     private fun File.prepare() {
-        if (!exists()) mkdir()
+        if (!exists()) mkdirs()
     }
 }

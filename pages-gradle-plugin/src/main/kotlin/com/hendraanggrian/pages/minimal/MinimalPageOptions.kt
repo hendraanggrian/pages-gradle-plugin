@@ -1,5 +1,7 @@
 package com.hendraanggrian.pages.minimal
 
+import com.hendraanggrian.pages.PageButton
+import com.hendraanggrian.pages.PageButtonsScope
 import com.hendraanggrian.pages.PagesConfigurationDsl
 import org.gradle.api.Action
 import org.gradle.kotlin.dsl.invoke
@@ -10,7 +12,14 @@ import java.io.File
  * Capability notation of `com.hendraanggrian:pages-minimal` must be requested.
  */
 @PagesConfigurationDsl
-interface MinimalPagesOptions {
+interface MinimalPageOptions {
+
+    /**
+     * Optional relative path to website favicon.
+     * E.g. `images/icon.png`.
+     */
+    var favicon: String?
+
     /**
      * Accent color of the webpage.
      * Default is material color `Blue A200`.
@@ -28,11 +37,6 @@ interface MinimalPagesOptions {
      * Default is material color `Blue A200 Light`.
      */
     var accentDarkHoverColor: String
-    /**
-     * Optional relative path to website logo.
-     * E.g. `images/icon.png`.
-     */
-    var icon: String?
 
     /**
      * Author full name in title and footer.
@@ -70,8 +74,11 @@ interface MinimalPagesOptions {
      */
     var markdownFile: File?
 
-    /** Configures header buttons. Header buttons size is capped at 3. */
-    fun headerButtons(action: Action<in MinimalButtonsScope>)
+    /**
+     * Configures header buttons, text of the button must be divided by newline `\n`.
+     * Button size is capped at 3.
+     */
+    fun headerButtons(action: Action<in PageButtonsScope>)
 
     /**
      * Small theme credit in footer.
@@ -80,11 +87,11 @@ interface MinimalPagesOptions {
     var footerCredit: Boolean
 }
 
-internal class MinimalPagesOptionsImpl(override var projectName: String) : MinimalPagesOptions, MinimalButtonsScope {
+internal class MinimalPageOptionsImpl(override var projectName: String) : MinimalPageOptions, PageButtonsScope {
+    override var favicon: String? = null
     override var accentColor: String = "#448aff"
     override var accentLightHoverColor: String = "#005ecb"
     override var accentDarkHoverColor: String = "#83b9ff"
-    override var icon: String? = null
     override var authorName: String? = null
     override var authorUrl: String? = null
     override var projectDescription: String? = null
@@ -92,12 +99,10 @@ internal class MinimalPagesOptionsImpl(override var projectName: String) : Minim
     override var markdownFile: File? = null
     override var footerCredit: Boolean = true
 
-    internal val headerButtons: MutableCollection<MinimalButton> = mutableListOf()
-    override fun headerButtons(action: Action<in MinimalButtonsScope>) = action(this)
-    override fun button(line1: String, line2: String, url: String) {
-        if (headerButtons.size >= 3) {
-            error("Header buttons are capped at 3")
-        }
-        headerButtons += MinimalButton(line1, line2, url)
+    internal val headerButtons = mutableListOf<PageButton>()
+    override fun headerButtons(action: Action<in PageButtonsScope>) = action(this)
+    override fun button(text: String, url: String) {
+        check(headerButtons.size < 3) { "Header buttons are capped at 3" }
+        headerButtons += PageButton(text, url)
     }
 }

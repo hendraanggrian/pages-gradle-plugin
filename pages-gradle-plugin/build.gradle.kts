@@ -7,9 +7,15 @@ plugins {
     alias(plugs.plugins.gradle.publish)
 }
 
-java.registerFeature("minimal") {
-    usingSourceSet(sourceSets.main.get())
-    capability(RELEASE_GROUP, "pages-minimal", RELEASE_VERSION)
+java {
+    registerFeature("minimal") {
+        usingSourceSet(sourceSets.main.get())
+        capability(RELEASE_GROUP, "pages-minimal", RELEASE_VERSION)
+    }
+    registerFeature("heyU") {
+        usingSourceSet(sourceSets.main.get())
+        capability(RELEASE_GROUP, "pages-heyu", RELEASE_VERSION)
+    }
 }
 
 gradlePlugin {
@@ -38,10 +44,12 @@ pluginBundle {
 }
 
 val minimalImplementation by configurations.getting
+val heyUImplementation by configurations.getting
 
 dependencies {
     minimalImplementation(libs.kotlinx.html.jvm)
     minimalImplementation(libs.commonmark.ext.gfm.tables)
+    heyUImplementation(libs.kotlinx.html.jvm)
     testImplementation(gradleTestKit())
     testImplementation(testLibs.kotlin.junit)
     testImplementation(testLibs.truth)

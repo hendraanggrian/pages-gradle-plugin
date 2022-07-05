@@ -75,16 +75,16 @@ class MinimalFeatureTest {
                     accentLightHoverColor = "#00ff00"
                     accentDarkHoverColor = "#0000ff"
                     authorName = "Cool Dude"
-                    authorUrl = "https://www.google.com"
+                    authorUrl = "https://www.google.com/"
                     projectName = "Cool Stuff"
                     projectDescription = "Cures cancer"
-                    projectUrl = "https://www.google.com"
+                    projectUrl = "https://www.google.com/"
                     footerCredit = false
                     markdownFile = file("Content.md")
                     headerButtons {
-                        button("Rate", "Us", "https://www.google.com")
-                        button("Leave", "Review", "https://www.google.com")
-                        button("Report", "User", "https://www.google.com")
+                        button("Rate\nUs", "https://www.google.com/")
+                        button("Leave\nReview", "https://www.google.com/")
+                        button("Report\nUser", "https://www.google.com/")
                     }
                 }
             }

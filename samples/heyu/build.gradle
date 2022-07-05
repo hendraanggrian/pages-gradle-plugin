@@ -1,0 +1,42 @@
+buildscript {
+    repositories.mavenCentral()
+    dependencies {
+        classpath files('../pages-gradle-plugin-0.1.jar')
+        classpath 'org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.5'
+    }
+}
+
+apply plugin: 'com.hendraanggrian.pages'
+
+pages.heyU {
+    appName = 'Crazy App'
+    heroLogo = 'images/hero.png'
+    heroTitle = 'Cures Cancer'
+    heroSubtitle = 'No, really. Just try it yourself.'
+    heroButtons {
+        button('Try', '#testimony')
+        button('Pricing', '#features')
+    }
+    screenshots {
+        screenshot('images/screenshot1.png', 'Totally Free', 'No credit card needed.')
+        screenshot('images/screenshot2.png', 'Cures Cancer', 'Oh, did I mention it cures cancer?')
+    }
+    testimonial {
+        featureLogo = 'images/screenshot1.png'
+        testimony('Good app!', 'Hendra', 'images/testimony1.jpg', 'Awesome Company', 'Office Boy')
+        testimony('Fabulous!', 'Anggrian', 'images/testimony2.jpg', 'Shitty Company', 'CEO')
+    }
+    features {
+        feature('search', 'Search', 'Can search anything, even under your bed. Can search anything, even under your bed. Can search anything, even under your bed. ')
+        feature('home', 'Home', 'Can go home in an instant. Can go home in an instant. Can go home in an instant. Can go home in an instant.')
+        feature('close', 'Close', 'Will close your bank account. Will close your bank account. Will close your bank account. Will close your bank account. ')
+        feature('settings', 'Settings', 'Willing to modify everything. Willing to modify everything. Willing to modify everything. Willing to modify everything. ')
+    }
+    download {
+        downloadLogo = 'images/screenshot1.png'
+        downloadTitle = 'Mama'
+        downloadDescription = 'Papa papa papa'
+        downloadAppStoreUrl = ''
+        downloadGooglePlayUrl = ''
+    }
+}
